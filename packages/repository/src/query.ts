@@ -3,13 +3,8 @@
 // This file is licensed under the MIT License.
 // License text available at https://opensource.org/licenses/MIT
 
-import {AnyObject} from './common-types';
+import { AnyObject } from './common-types';
 import * as assert from 'assert';
-
-// Copyright IBM Corp. 2017. All Rights Reserved.
-// Node module: @loopback/repository
-// This file is licensed under the MIT License.
-// License text available at https://opensource.org/licenses/MIT
 
 // tslint:disable:no-any
 
@@ -66,7 +61,7 @@ export type ShortHandEqualType = string | number | boolean | Date;
 export type KeyOf<MT extends object> = Exclude<
   Extract<keyof MT, string>,
   Operators
->;
+  >;
 
 /**
  * Condition clause
@@ -81,8 +76,8 @@ export type KeyOf<MT extends object> = Exclude<
  */
 export type Condition<MT extends object> = {
   [P in KeyOf<MT>]?:
-    | PredicateComparison<MT[P]> // {x: {lt: 1}}
-    | (MT[P] & ShortHandEqualType) // {x: 1},
+  | PredicateComparison<MT[P]> // {x: {lt: 1}}
+  | (MT[P] & ShortHandEqualType) // {x: 1},
 };
 
 /**
@@ -138,7 +133,7 @@ export type Direction = 'ASC' | 'DESC';
  * Example:
  * `{afieldname: 'ASC'}`
  */
-export type Order<MT = AnyObject> = {[P in keyof MT]: Direction};
+export type Order<MT = AnyObject> = { [P in keyof MT]: Direction };
 
 /**
  * Selection of fields
@@ -146,7 +141,7 @@ export type Order<MT = AnyObject> = {[P in keyof MT]: Direction};
  * Example:
  * `{afieldname: true}`
  */
-export type Fields<MT = AnyObject> = {[P in keyof MT]?: boolean};
+export type Fields<MT = AnyObject> = { [P in keyof MT]?: boolean };
 
 /**
  * Inclusion of related items
@@ -288,7 +283,7 @@ export class WhereBuilder<MT extends object = AnyObject> {
     w.forEach(where => {
       clauses = clauses.concat(Array.isArray(where) ? where : [where]);
     });
-    return this.add(this.cast({and: clauses}));
+    return this.add(this.cast({ and: clauses }));
   }
 
   /**
@@ -300,7 +295,7 @@ export class WhereBuilder<MT extends object = AnyObject> {
     w.forEach(where => {
       clauses = clauses.concat(Array.isArray(where) ? where : [where]);
     });
-    return this.add(this.cast({or: clauses}));
+    return this.add(this.cast({ or: clauses }));
   }
 
   /**
@@ -321,7 +316,7 @@ export class WhereBuilder<MT extends object = AnyObject> {
    */
   neq<K extends KeyOf<MT>>(key: K, val: MT[K]): this {
     const w: Where<MT> = {};
-    w[key] = {neq: val};
+    w[key] = { neq: val };
     return this.add(w);
   }
 
@@ -332,7 +327,7 @@ export class WhereBuilder<MT extends object = AnyObject> {
    */
   gt<K extends KeyOf<MT>>(key: K, val: MT[K]): this {
     const w: Where<MT> = {};
-    w[key] = {gt: val};
+    w[key] = { gt: val };
     return this.add(w);
   }
 
@@ -343,7 +338,7 @@ export class WhereBuilder<MT extends object = AnyObject> {
    */
   gte<K extends KeyOf<MT>>(key: K, val: MT[K]): this {
     const w: Where<MT> = {};
-    w[key] = {gte: val};
+    w[key] = { gte: val };
     return this.add(w);
   }
 
@@ -354,7 +349,7 @@ export class WhereBuilder<MT extends object = AnyObject> {
    */
   lt<K extends KeyOf<MT>>(key: K, val: MT[K]): this {
     const w: Where<MT> = {};
-    w[key] = {lt: val};
+    w[key] = { lt: val };
     return this.add(w);
   }
 
@@ -365,7 +360,7 @@ export class WhereBuilder<MT extends object = AnyObject> {
    */
   lte<K extends KeyOf<MT>>(key: K, val: MT[K]): this {
     const w: Where<MT> = {};
-    w[key] = {lte: val};
+    w[key] = { lte: val };
     return this.add(w);
   }
 
@@ -376,7 +371,7 @@ export class WhereBuilder<MT extends object = AnyObject> {
    */
   inq<K extends KeyOf<MT>>(key: K, val: MT[K][]): this {
     const w: Where<MT> = {};
-    w[key] = {inq: val};
+    w[key] = { inq: val };
     return this.add(w);
   }
 
@@ -388,7 +383,7 @@ export class WhereBuilder<MT extends object = AnyObject> {
    */
   between<K extends KeyOf<MT>>(key: K, val1: MT[K], val2: MT[K]): this {
     const w: Where<MT> = {};
-    w[key] = {between: [val1, val2]};
+    w[key] = { between: [val1, val2] };
     return this.add(w);
   }
 
@@ -399,7 +394,7 @@ export class WhereBuilder<MT extends object = AnyObject> {
    */
   exists<K extends KeyOf<MT>>(key: K, val?: boolean): this {
     const w: Where<MT> = {};
-    w[key] = {exists: !!val || val == null};
+    w[key] = { exists: !!val || val == null };
     return this.add(w);
   }
   /**
@@ -546,9 +541,9 @@ export class FilterBuilder<MT extends object = AnyObject> {
     }
     for (const include of i) {
       if (typeof include === 'string') {
-        this.filter.include.push({relation: include});
+        this.filter.include.push({ relation: include });
       } else if (Array.isArray(include)) {
-        for (const inc of include) this.filter.include.push({relation: inc});
+        for (const inc of include) this.filter.include.push({ relation: inc });
       } else {
         this.filter.include!.push(include);
       }
@@ -577,7 +572,7 @@ export class FilterBuilder<MT extends object = AnyObject> {
     if (!this.filter) {
       // if constraint is a Where, turn into a Filter
       if (!isFilter(constraint)) {
-        constraint = {where: constraint};
+        constraint = { where: constraint };
       }
       this.filter = (constraint as Filter<MT>) || {};
     } else {
