@@ -496,7 +496,7 @@ export class FilterBuilder<MT extends object = AnyObject> {
 
   /**
    * Describe the sorting order
-   * @param f A field name with optional direction, an array of field names,
+   * @param o A field name with optional direction, an array of field names,
    * or an Order object for the field/direction pairs
    */
   order(...o: (string | string[] | Order<MT>)[]): this {
